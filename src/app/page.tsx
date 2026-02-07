@@ -1,33 +1,27 @@
 import { getTrendingVideos } from "@/lib/youtube";
+import VideoCard from "@/components/common/VideoCard";
 
 export default async function HomePage() {
+  // 서버 사이드에서 인기 영상 데이터 페칭
   const videos = await getTrendingVideos();
 
   return (
-    <main className="p-6 max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-red-600">이거뜸! 🚀</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="mx-auto max-w-screen-xl px-4 py-10">
+      <header className="mb-10">
+        <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
+          지금 뜨는 영상 🔥
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          유튜브에서 실시간으로 가장 핫한 트렌드입니다.
+        </p>
+      </header>
+
+      {/* 320px 너비의 카드를 화면 크기에 맞게 자동으로 배치하는 그리드 */}
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-x-6 gap-y-12 justify-items-center">
         {videos.map((video) => (
-          <div
-            key={video.id}
-            className="border rounded-xl overflow-hidden hover:shadow-lg transition"
-          >
-            <img
-              src={video.snippet.thumbnails.medium.url}
-              alt={video.snippet.title}
-              className="w-full"
-            />
-            <div className="p-4">
-              <h2 className="font-semibold line-clamp-2">
-                {video.snippet.title}
-              </h2>
-              <p className="text-sm text-gray-500 mt-2">
-                {video.snippet.channelTitle}
-              </p>
-            </div>
-          </div>
+          <VideoCard key={video.id} video={video} />
         ))}
       </div>
-    </main>
+    </div>
   );
 }
