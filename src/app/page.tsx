@@ -2,7 +2,6 @@ import { getTrendingVideos } from "@/lib/youtube";
 import VideoCard from "@/components/common/VideoCard";
 
 export default async function HomePage() {
-  // 서버 사이드에서 인기 영상 데이터 페칭
   const videos = await getTrendingVideos();
 
   return (
@@ -16,10 +15,10 @@ export default async function HomePage() {
         </p>
       </header>
 
-      {/* 320px 너비의 카드를 화면 크기에 맞게 자동으로 배치하는 그리드 */}
       <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-x-6 gap-y-12 justify-items-center">
-        {videos.map((video) => (
-          <VideoCard key={video.id} video={video} />
+        {videos.map((video, index) => (
+          // index는 0부터 시작하므로 +1을 해서 rank로 넘겨줍니다.
+          <VideoCard key={video.id} video={video} rank={index + 1} />
         ))}
       </div>
     </div>
