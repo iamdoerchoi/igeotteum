@@ -24,9 +24,9 @@ export default function Header() {
         </Link>
 
         {/* 검색창 (데스크탑) */}
-        <div className="hidden md:flex flex-1 justify-center max-w-[600px]">
+        {/* <div className="hidden md:flex flex-1 justify-center max-w-[600px]">
           <SearchBar />
-        </div>
+        </div> */}
 
         {/* 우측 아이콘 영역 */}
         <div className="flex items-center gap-2">
