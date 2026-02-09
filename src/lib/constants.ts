@@ -18,3 +18,13 @@ export const YOUTUBE_CATEGORY_MAP: Record<string, string> = {
   "28": "과학/기술",
   "29": "비영리/사회운동",
 };
+
+export const SUPPORTED_COUNTRIES = [
+  { code: "KR", name: "🇰🇷 대한민국" },
+  { code: "US", name: "🇺🇸 미국" },
+  { code: "JP", name: "🇯🇵 일본" },
+  // { code: "VN", name: "🇻🇳 베트남" },
+  // { code: "IN", name: "🇮🇳 인도" },
+  // { code: "GB", name: "🇬🇧 영국" },
+  // { code: "BR", name: "🇧🇷 브라질" },
+];

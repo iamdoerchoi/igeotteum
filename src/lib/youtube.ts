@@ -1,17 +1,25 @@
 import { YoutubeVideo } from "@/types/video";
 
-export async function getTrendingVideos() {
-  const API_KEY = process.env.YOUTUBE_API_KEY;
-  const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=KR&maxResults=12&key=${API_KEY}`;
+export async function getTrendingVideos(regionCode: string = "KR") {
+  const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 
-  const res = await fetch(url, {
-    next: { revalidate: 3600 }, // 1시간마다 데이터 갱신 (할당량 절약 및 성능 최적화)
-  });
+  // &regionCode=${regionCode} 추가
+  const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&maxResults=20&regionCode=${regionCode}&key=${API_KEY}`;
 
-  if (!res.ok) throw new Error("데이터를 불러오지 못했습니다.");
+  try {
+    // 국가가 바뀌면 데이터가 다르므로 캐시 전략을 유연하게 가져갑니다 (1시간 갱신)
+    const res = await fetch(url, {
+      next: { revalidate: 3600 },
+    });
 
-  const data = await res.json();
-  return data.items as YoutubeVideo[];
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    return data.items as YoutubeVideo[];
+  } catch (error) {
+    console.error("트렌딩 비디오 로딩 실패:", error);
+    return [];
+  }
 }
 
 export async function getVideoDetail(id: string) {
