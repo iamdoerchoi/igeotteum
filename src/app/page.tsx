@@ -1,6 +1,5 @@
 import { getTrendingVideos } from "@/lib/youtube";
 import VideoCard from "@/components/common/VideoCard";
-import Image from "next/image";
 
 export default async function HomePage() {
   const videos = await getTrendingVideos();
@@ -27,50 +26,6 @@ export default async function HomePage() {
             <VideoCard key={video.id} video={video} rank={index + 1} />
           ))}
         </div>
-
-        <VideoCardDebug />
-      </div>
-    </div>
-  );
-}
-
-function VideoCardDebug() {
-  return (
-    <div className="border-4 border-red-500 p-4 m-4">
-      <p className="text-red-600 font-bold mb-2">카드 경계 (빨간 테두리)</p>
-
-      {/* 이미지 컨테이너 */}
-      <div className="border-4 border-blue-500 relative w-full bg-yellow-100">
-        <p className="text-blue-600 text-xs mb-1">
-          이미지 컨테이너 (파란 테두리)
-        </p>
-
-        {/* aspect ratio wrapper */}
-        <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-          <div className="absolute inset-0 bg-green-200 border-2 border-green-600">
-            <p className="text-green-800 text-xs">
-              absolute inset-0 영역 (초록)
-            </p>
-
-            <Image
-              src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
-              alt="Test thumbnail"
-              fill
-              className="object-cover"
-            />
-          </div>
-
-          {/* 배지 테스트 */}
-          <div className="absolute left-2 top-2 bg-yellow-400 text-black px-2 py-1 rounded z-10">
-            1
-          </div>
-        </div>
-      </div>
-
-      {/* 정보 영역 */}
-      <div className="mt-3 border-2 border-purple-500 p-2">
-        <p className="text-purple-600">정보 영역 (보라 테두리)</p>
-        <p className="text-sm">테스트 제목</p>
       </div>
     </div>
   );
