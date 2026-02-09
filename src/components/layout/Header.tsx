@@ -1,8 +1,9 @@
 // src/components/layout/Header.tsx
 "use client";
-import { Youtube, Search, Bell, User } from "lucide-react";
+import { Youtube, Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import SearchBar from "../common/SearchBar";
 
 export default function Header() {
   return (
@@ -20,15 +21,8 @@ export default function Header() {
         </motion.div>
 
         {/* 검색창 (데스크탑) */}
-        <div className="hidden md:flex w-full max-w-sm items-center space-x-2">
-          <div className="relative w-full">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <input
-              type="search"
-              placeholder="급상승 트렌드 검색..."
-              className="w-full rounded-md border border-input bg-background px-9 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            />
-          </div>
+        <div className="hidden md:flex flex-1 justify-center max-w-[600px]">
+          <SearchBar />
         </div>
 
         {/* 우측 아이콘 영역 */}

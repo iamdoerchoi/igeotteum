@@ -57,3 +57,46 @@ export async function getVideosByCategory(categoryId: string) {
     return [];
   }
 }
+
+interface YoutubeSearchItem {
+  id: {
+    kind: string;
+    videoId: string; // 여기가 핵심입니다! (객체 안에 videoId가 있음)
+  };
+  snippet: {
+    title: string;
+    description: string;
+    thumbnails: {
+      medium: { url: string };
+      high?: { url: string };
+    };
+    channelTitle: string;
+    publishedAt: string;
+  };
+}
+
+export async function searchVideos(query: string) {
+  const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+  // type=video: 채널이나 재생목록 제외하고 비디오만 검색
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=10&key=${API_KEY}`;
+
+  try {
+    const res = await fetch(url, { cache: "no-store" }); // 검색 결과는 캐싱하지 않음
+    if (!res.ok) return [];
+
+    const data = await res.json();
+
+    // search 엔드포인트는 id가 객체 형태({ kind: "youtube#video", videoId: "..." })로 옵니다.
+    // 이를 우리가 쓰는 YoutubeVideo 타입에 맞게 살짝 가공해야 합니다.
+    return data.items
+      .filter((item: YoutubeSearchItem) => item.id?.videoId)
+      .map((item: YoutubeSearchItem) => ({
+        ...item,
+        id: item.id.videoId, // id 객체에서 videoId만 추출
+        statistics: { viewCount: "0" }, // search API는 조회수를 안 줍니다 ㅠㅠ (0으로 처리하거나 별도 요청 필요)
+      }));
+  } catch (error) {
+    console.error("검색 실패:", error);
+    return [];
+  }
+}

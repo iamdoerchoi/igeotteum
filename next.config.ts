@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**", // 모든 경로 허용
       },
+      {
+        protocol: "https",
+        hostname: "yt3.ggpht.com",
+        port: "",
+        pathname: "/**", // 모든 경로 허용
+      },
     ],
   },
 };
