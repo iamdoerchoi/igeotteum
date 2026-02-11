@@ -4,9 +4,14 @@ import "./globals.css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "이거뜸 - 글로벌 유튜브 트렌드 분석",
+  metadataBase: new URL("https://igeotteum.vercel.app"),
+  title: {
+    default: "이거뜸 - 글로벌 유튜브 트렌드 분석",
+    template: "%s | 이거뜸",
+  },
   description:
     "한국, 미국, 일본 등 전 세계 유튜브 인기 급상승 동영상을 한눈에 확인하세요.",
+  keywords: ["유튜브", "인급동", "인기급상승", "트렌드", "유튜브순위"],
   icons: {
     icon: "/favicon.ico",
   },
@@ -24,6 +29,9 @@ export const metadata: Metadata = {
     ],
     locale: "ko_KR",
     type: "website",
+  },
+  verification: {
+    google: "AKkadg8OM5gXnZvJVI7wzAVCe13Tpj3Yi1QbmDZdhq0",
   },
 };
 
