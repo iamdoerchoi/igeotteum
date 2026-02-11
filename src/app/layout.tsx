@@ -3,6 +3,8 @@ import Header from "@/components/layout/Header";
 import "./globals.css";
 import { Metadata } from "next";
 
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://igeotteum.vercel.app"),
   title: {
@@ -40,12 +42,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const gaId =
+    process.env.NODE_ENV === "production"
+      ? process.env.NEXT_PUBLIC_GA_ID
+      : undefined;
+
   return (
     <html lang="ko">
       <body>
         <Header />
         <main>{children}</main>
       </body>
+      {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
   );
 }
