@@ -1,10 +1,18 @@
 import { YoutubeVideo } from "@/types/video";
 
-export async function getTrendingVideos(regionCode: string = "KR") {
+export async function getTrendingVideos(
+  regionCode: string = "KR",
+  categoryId: string = "0",
+) {
   const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 
   // &regionCode=${regionCode} 추가
-  const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&maxResults=20&regionCode=${regionCode}&key=${API_KEY}`;
+  let url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&maxResults=20&regionCode=${regionCode}&key=${API_KEY}`;
+
+  // 🔥 카테고리 ID가 "0"이 아니면 파라미터 추가
+  if (categoryId !== "0") {
+    url += `&videoCategoryId=${categoryId}`;
+  }
 
   try {
     // 국가가 바뀌면 데이터가 다르므로 캐시 전략을 유연하게 가져갑니다 (1시간 갱신)
