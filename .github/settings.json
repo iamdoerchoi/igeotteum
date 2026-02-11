@@ -1,0 +1,16 @@
+{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Always follow the Angular Commit Message Guideline (feat, fix, chore, docs, style, refactor, perf)."
+    },
+    {
+      "text": "The first line must be '<type>: <short description>' in lowercase and under 50 characters."
+    },
+    {
+      "text": "Use the imperative mood (e.g., 'add' instead of 'added' or 'adds')."
+    },
+    {
+      "text": "Do not end the subject line with a period."
+    }
+  ]
+}
