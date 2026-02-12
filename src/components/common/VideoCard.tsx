@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
-// import Link from "next/link"; // ❌ Link는 사용하지 않습니다.
+
 import { YoutubeVideo } from "@/types/video";
-import { YOUTUBE_CATEGORY_MAP } from "@/lib/constants";
+
 import { decode } from "html-entities"; // (선택사항: 특수문자 깨짐 방지용)
+import { YOUTUBE_CATEGORY_MAP } from "@/lib/constants";
+
+import { useToast } from "@/context/ToastContext";
 
 interface VideoCardProps {
   video: YoutubeVideo;
@@ -12,6 +15,8 @@ interface VideoCardProps {
 }
 
 export default function VideoCard({ video, rank }: VideoCardProps) {
+  const { showToast } = useToast();
+
   // 카테고리 이름 가져오기
   const categoryName = YOUTUBE_CATEGORY_MAP[video.snippet.categoryId] || "기타";
 
@@ -36,6 +41,20 @@ export default function VideoCard({ video, rank }: VideoCardProps) {
         return "bg-yellow-500 text-white border-yellow-600";
       default:
         return "bg-slate-800/80 text-white backdrop-blur-sm border-transparent";
+    }
+  };
+
+  const handleShare = async (e: React.MouseEvent) => {
+    e.preventDefault(); // 부모 링크 클릭 방지 (중요! ⭐)
+    e.stopPropagation(); // 이벤트 전파 방지
+
+    const link = `https://www.youtube.com/watch?v=${video.id}`;
+
+    try {
+      await navigator.clipboard.writeText(link);
+      showToast("링크가 복사되었습니다!"); // 토스트 띄우기
+    } catch (err) {
+      showToast("복사에 실패했습니다. 😢");
     }
   };
 
@@ -74,6 +93,31 @@ export default function VideoCard({ video, rank }: VideoCardProps) {
         <div className="absolute bottom-2 right-2 rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
           {categoryName}
         </div>
+
+        {/*  공유 버튼 추가 (우측 상단) */}
+        <button
+          onClick={handleShare}
+          className="absolute top-2 right-2 p-2 bg-black/60 text-white rounded-full backdrop-blur-sm z-10 transition-all duration-200 
+             opacity-100 lg:opacity-0 lg:group-hover:opacity-100 hover:bg-black/80 shadow-sm"
+          title="링크 복사"
+          aria-label="링크 복사"
+        >
+          {/* 공유 아이콘 (SVG) */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+        </button>
       </div>
 
       {/* 정보 영역 */}

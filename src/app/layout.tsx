@@ -5,6 +5,8 @@ import { Metadata } from "next";
 
 import { GoogleAnalytics } from "@next/third-parties/google";
 
+import { ToastProvider } from "@/context/ToastContext";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://igeotteum.vercel.app"),
   title: {
@@ -50,8 +52,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Header />
-        <main>{children}</main>
+        <ToastProvider>
+          <Header />
+          <main>{children}</main>
+        </ToastProvider>
       </body>
       {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
