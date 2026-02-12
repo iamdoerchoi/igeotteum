@@ -1,9 +1,14 @@
 import { YoutubeVideo } from "@/types/video";
 
+export interface VideoData {
+  items: YoutubeVideo[];
+  lastUpdated: string;
+}
+
 export async function getTrendingVideos(
   regionCode: string = "KR",
   categoryId: string = "0",
-) {
+): Promise<VideoData> {
   const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 
   // &regionCode=${regionCode} 추가
@@ -15,18 +20,30 @@ export async function getTrendingVideos(
   }
 
   try {
-    // 국가가 바뀌면 데이터가 다르므로 캐시 전략을 유연하게 가져갑니다 (1시간 갱신)
+    // 국가가 바뀌면 데이터가 다르므로 캐시 전략을 유연하게 가져갑니다 (10분 갱신)
     const res = await fetch(url, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 600 },
     });
 
-    if (!res.ok) return [];
+    if (!res.ok) {
+      throw new Error(`API 응답 에러: ${res.status}`);
+    }
 
     const data = await res.json();
-    return data.items as YoutubeVideo[];
+
+    // 현재 시간을 한국 시간 포맷으로 생성
+    const now = new Date();
+    const timeString = new Intl.DateTimeFormat("ko-KR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false, // 24시간제 (14:30)
+      timeZone: "Asia/Seoul",
+    }).format(now);
+
+    return { items: data.items as YoutubeVideo[], lastUpdated: timeString };
   } catch (error) {
     console.error("트렌딩 비디오 로딩 실패:", error);
-    return [];
+    return { items: [], lastUpdated: "" };
   }
 }
 

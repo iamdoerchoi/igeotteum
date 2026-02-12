@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { YoutubeVideo } from "@/types/video";
 
+import clsx from "clsx";
 import { decode } from "html-entities"; // (선택사항: 특수문자 깨짐 방지용)
 import { YOUTUBE_CATEGORY_MAP } from "@/lib/constants";
 
@@ -97,8 +98,10 @@ export default function VideoCard({ video, rank }: VideoCardProps) {
         {/*  공유 버튼 추가 (우측 상단) */}
         <button
           onClick={handleShare}
-          className="absolute top-2 right-2 p-2 bg-black/60 text-white rounded-full backdrop-blur-sm z-10 transition-all duration-200 
-             opacity-100 lg:opacity-0 lg:group-hover:opacity-100 hover:bg-black/80 shadow-sm"
+          className={clsx(
+            "absolute top-2 right-2 p-2 bg-black/60 text-white rounded-full backdrop-blur-sm z-10 transition-all duration-200",
+            "opacity-100 lg:opacity-0 lg:group-hover:opacity-100 hover:bg-black/80 shadow-sm",
+          )}
           title="링크 복사"
           aria-label="링크 복사"
         >
