@@ -72,7 +72,7 @@ export default function VideoCard({ video, rank }: VideoCardProps) {
       className="group flex flex-col gap-3 cursor-pointer"
     >
       {/* 썸네일 영역 */}
-      <div className="relative w-full overflow-hidden rounded-xl bg-slate-200 shadow-sm group-hover:shadow-md transition-shadow aspect-video">
+      <div className="relative w-full overflow-hidden rounded-xl bg-muted shadow-sm group-hover:shadow-md transition-shadow aspect-video">
         <Image
           src={thumbnailUrl}
           alt={video.snippet.title}
@@ -127,23 +127,23 @@ export default function VideoCard({ video, rank }: VideoCardProps) {
       <div className="flex gap-3 px-1">
         {/* 채널 아이콘 (임시로 첫 글자 표시) */}
         <div className="flex-shrink-0">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-slate-100 to-slate-200 text-xs font-bold text-slate-600 shadow-inner">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-xs font-bold text-secondary-foreground shadow-inner">
             {video.snippet.channelTitle.charAt(0)}
           </div>
         </div>
 
         <div className="flex flex-col gap-1 min-w-0">
           {/* 제목 (2줄 제한) */}
-          <h3 className="line-clamp-2 text-[15px] font-bold leading-snug text-slate-900 group-hover:text-red-600 transition-colors">
+          <h3 className="line-clamp-2 text-[15px] font-bold leading-snug text-foreground group-hover:text-red-600 transition-colors">
             {decode(video.snippet.title)}
           </h3>
 
           {/* 채널명 및 조회수 */}
-          <div className="text-[13px] font-medium text-slate-500">
-            <p className="truncate hover:text-slate-700">
+          <div className="text-[13px] font-semibold text-foreground/80">
+            <p className="truncate hover:text-foreground transition-colors">
               {video.snippet.channelTitle}
             </p>
-            <p className="mt-0.5 text-slate-400 font-normal">
+            <p className="mt-0.5 text-muted-foreground/90 font-medium">
               조회수 {formatViewCount(video.statistics.viewCount)}회 •{" "}
               {new Date(video.snippet.publishedAt).toLocaleDateString("ko-KR", {
                 year: "numeric",

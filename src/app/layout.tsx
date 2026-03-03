@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { ToastProvider } from "@/context/ToastContext";
+import { ThemeProvider } from "@/components/common/ThemeProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://igeotteum.vercel.app"),
@@ -50,12 +51,19 @@ export default function RootLayout({
       : undefined;
 
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <body>
-        <ToastProvider>
-          <Header />
-          <main>{children}</main>
-        </ToastProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ToastProvider>
+            <Header />
+            <main>{children}</main>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
       {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>

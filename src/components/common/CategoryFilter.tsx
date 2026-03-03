@@ -31,8 +31,8 @@ export default function CategoryFilter() {
                 px-4 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap cursor-pointer
                 ${
                   isSelected
-                    ? "bg-slate-900 text-white shadow-md hover:bg-slate-800"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                    ? "bg-primary text-primary-foreground shadow-md hover:bg-primary/90"
+                    : "bg-secondary text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
                 }
               `}
             >

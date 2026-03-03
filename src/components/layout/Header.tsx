@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import SearchBar from "../common/SearchBar";
 import Link from "next/link";
+import { ModeToggle } from "../common/ModeToggle";
 
 export default function Header() {
   return (
@@ -30,6 +31,7 @@ export default function Header() {
 
         {/* 우측 아이콘 영역 */}
         <div className="flex items-center gap-2">
+          <ModeToggle />
           <Button variant="ghost" size="icon">
             <Bell className="h-5 w-5" />
           </Button>

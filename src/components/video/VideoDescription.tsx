@@ -20,23 +20,23 @@ export default function VideoDescription({ description, viewCount, publishedAt }
 
   return (
     <div
-      className={`rounded-xl bg-slate-100 p-3 text-sm transition-colors ${isExpanded ? "bg-slate-200/50" : "hover:bg-slate-200"}`}
+      className={`rounded-xl bg-muted p-3 text-sm transition-colors cursor-pointer ${isExpanded ? "bg-muted/80" : "hover:bg-muted/70"}`}
       onClick={() => setIsExpanded(!isExpanded)} // 박스 전체 클릭 시 토글
     >
-      <div className="mb-2 flex gap-2 font-bold text-slate-900">
+      <div className="mb-2 flex gap-2 font-bold text-foreground">
         <span>조회수 {Number(viewCount).toLocaleString()}회</span>
-        <span className="text-slate-400">•</span>
+        <span className="text-muted-foreground/60">•</span>
         <span>{formattedDate}</span>
       </div>
 
       <div className="relative">
-        <p className={`whitespace-pre-wrap leading-relaxed text-slate-700 ${isExpanded ? "" : "line-clamp-3"}`}>
+        <p className={`whitespace-pre-wrap leading-relaxed text-foreground/90 ${isExpanded ? "" : "line-clamp-3"}`}>
           {description}
         </p>
 
         {/* 더보기 버튼 */}
         <button
-          className="mt-2 font-bold text-slate-600 text-xs hover:text-slate-900"
+          className="mt-2 font-bold text-muted-foreground text-xs hover:text-foreground"
           onClick={(e) => {
             e.stopPropagation(); // 버튼 클릭 시 부모 클릭 이벤트 전파 방지 (선택 사항)
             setIsExpanded(!isExpanded);

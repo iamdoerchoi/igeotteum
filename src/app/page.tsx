@@ -26,7 +26,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const suspenseKey = `${currentGeo}-${currentCategory}`;
 
   return (
-    <div className="min-h-screen bg-slate-50/50">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-screen-xl px-4 py-8">
         {/* 헤더 */}
         <header className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -35,9 +35,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500">
                 이거뜸
               </span>
-              <span className="ml-1 text-slate-800">🔥</span>
+              <span className="ml-1 text-foreground">🔥</span>
             </h1>
-            <p className="text-slate-500 text-sm">
+            <p className="text-muted-foreground text-base font-medium">
               지금 가장 핫한 트렌드를 확인하세요.
             </p>
           </div>
@@ -47,7 +47,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         </header>
 
         {/* 카테고리 필터 */}
-        <section className="mb-8 sticky top-[64px] z-40 bg-slate-50/95 py-2 backdrop-blur-sm -mx-4 px-4 sm:static sm:bg-transparent sm:p-0">
+        <section className="mb-8 sticky top-[64px] z-40 bg-background/95 py-2 backdrop-blur-sm -mx-4 px-4 sm:static sm:bg-transparent sm:p-0">
           <CategoryFilter />
         </section>
 
