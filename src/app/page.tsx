@@ -25,8 +25,21 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   const suspenseKey = `${currentGeo}-${currentCategory}`;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "이거뜸",
+    alternateName: ["Igeotteum", "이거뜸 유튜브 트렌드"],
+    url: "https://igeotteum.vercel.app",
+    description: "지금 당장 이거뜸! 전 세계 유튜브 인기 급상승 동영상 트렌드를 가장 빠르게 확인하세요.",
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mx-auto max-w-screen-xl px-4 py-8">
         {/* 헤더 */}
         <header className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
