@@ -1,4 +1,5 @@
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 import "./globals.css";
 import { Metadata } from "next";
@@ -73,7 +74,8 @@ export default function RootLayout({
         >
           <ToastProvider>
             <Header />
-            <main>{children}</main>
+            <main className="min-h-screen">{children}</main>
+            <Footer />
           </ToastProvider>
         </ThemeProvider>
       </body>

@@ -1,6 +1,6 @@
 "use client"; // 상태 관리를 위해 클라이언트 컴포넌트 선언
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface VideoDescriptionProps {
   description: string;
@@ -10,13 +10,21 @@ interface VideoDescriptionProps {
 
 export default function VideoDescription({ description, viewCount, publishedAt }: VideoDescriptionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // 날짜 포맷팅
-  const formattedDate = new Date(publishedAt).toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const getFormattedDate = () => {
+    if (!mounted) return publishedAt.split("T")[0];
+    return new Date(publishedAt).toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   return (
     <div
@@ -26,7 +34,7 @@ export default function VideoDescription({ description, viewCount, publishedAt }
       <div className="mb-2 flex gap-2 font-bold text-foreground">
         <span>조회수 {Number(viewCount).toLocaleString()}회</span>
         <span className="text-muted-foreground/60">•</span>
-        <span>{formattedDate}</span>
+        <span>{getFormattedDate()}</span>
       </div>
 
       <div className="relative">
