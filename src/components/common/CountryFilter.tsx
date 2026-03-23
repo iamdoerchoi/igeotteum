@@ -18,7 +18,7 @@ export default function CountryFilter() {
 
   return (
     <div className="flex items-center gap-2">
-      <label htmlFor="country-select" className="text-sm font-medium text-slate-600 hidden sm:block">
+      <label htmlFor="country-select" className="text-sm font-semibold text-foreground/80 hidden sm:block">
         국가 변경:
       </label>
       <div className="relative">
@@ -26,17 +26,17 @@ export default function CountryFilter() {
           id="country-select"
           value={currentGeo}
           onChange={handleChange}
-          className="appearance-none cursor-pointer rounded-lg border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-bold text-slate-700 shadow-sm hover:border-slate-300 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+          className="appearance-none cursor-pointer rounded-lg border border-input bg-background py-2 pl-3 pr-8 text-sm font-bold text-foreground shadow-sm hover:border-accent-foreground focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
         >
           {SUPPORTED_COUNTRIES.map((country) => (
-            <option key={country.code} value={country.code}>
+            <option key={country.code} value={country.code} className="bg-background">
               {country.name}
             </option>
           ))}
         </select>
 
         {/* 커스텀 화살표 아이콘 (select 기본 화살표 가리고 이쁜거 넣기) */}
-        <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-slate-500">
+        <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

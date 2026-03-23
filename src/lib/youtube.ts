@@ -1,24 +1,55 @@
 import { YoutubeVideo } from "@/types/video";
 
-export async function getTrendingVideos(regionCode: string = "KR") {
+export interface VideoData {
+  items: YoutubeVideo[];
+  lastUpdated: string;
+}
+
+export async function getTrendingVideos(
+  regionCode: string = "KR",
+  categoryId: string = "0",
+): Promise<VideoData> {
   const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 
-  // &regionCode=${regionCode} 추가
-  const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&maxResults=20&regionCode=${regionCode}&key=${API_KEY}`;
+  let url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&maxResults=20&regionCode=${regionCode}&key=${API_KEY}`;
+
+  if (categoryId !== "0") {
+    url += `&videoCategoryId=${categoryId}`;
+  }
 
   try {
-    // 국가가 바뀌면 데이터가 다르므로 캐시 전략을 유연하게 가져갑니다 (1시간 갱신)
+    // 30분(1800초)마다 갱신되도록 설정하여 모든 유저에게 동일한 캐시 제공
     const res = await fetch(url, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 1800 },
     });
 
-    if (!res.ok) return [];
+    if (!res.ok) {
+      throw new Error(`API 응답 에러: ${res.status}`);
+    }
 
     const data = await res.json();
-    return data.items as YoutubeVideo[];
+
+    // 현재 시간을 기준으로 가장 최근의 30분 단위 시간 계산 (예: 12:15 -> 12:00, 12:45 -> 12:30)
+    const now = new Date();
+    const minutes = now.getMinutes();
+    const normalizedMinutes = minutes >= 30 ? 30 : 0;
+    
+    const lastUpdatedDate = new Date(now);
+    lastUpdatedDate.setMinutes(normalizedMinutes);
+    lastUpdatedDate.setSeconds(0);
+    lastUpdatedDate.setMilliseconds(0);
+
+    const timeString = new Intl.DateTimeFormat("ko-KR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "Asia/Seoul",
+    }).format(lastUpdatedDate);
+
+    return { items: data.items as YoutubeVideo[], lastUpdated: timeString };
   } catch (error) {
     console.error("트렌딩 비디오 로딩 실패:", error);
-    return [];
+    return { items: [], lastUpdated: "" };
   }
 }
 

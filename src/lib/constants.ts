@@ -1,4 +1,3 @@
-// src/lib/constants.ts
 export const YOUTUBE_CATEGORY_MAP: Record<string, string> = {
   "1": "영화/애니",
   "2": "자동차",
@@ -27,4 +26,18 @@ export const SUPPORTED_COUNTRIES = [
   // { code: "IN", name: "🇮🇳 인도" },
   // { code: "GB", name: "🇬🇧 영국" },
   // { code: "BR", name: "🇧🇷 브라질" },
+];
+
+export const VIDEO_CATEGORIES = [
+  { id: "0", name: "전체" }, // API 호출 시 0이면 파라미터 제외
+  { id: "10", name: "음악" },
+  { id: "24", name: "엔터테인먼트" },
+  { id: "20", name: "게임" },
+  { id: "23", name: "코미디" },
+  { id: "17", name: "스포츠" },
+  { id: "25", name: "뉴스/정치" },
+  { id: "22", name: "인물/블로그" },
+  { id: "1", name: "영화/애니" },
+  { id: "28", name: "과학/기술" },
+  { id: "15", name: "동물" },
 ];

@@ -12,7 +12,7 @@ export default function VideoCardSmall({ video }: VideoCardSmallProps) {
   return (
     <Link href={`/video/${video.id}`} className="flex gap-3 group w-full">
       {/* 썸네일: 160x90 고정 */}
-      <div className="relative flex-shrink-0 w-[160px] h-[90px] overflow-hidden rounded-lg bg-slate-100">
+      <div className="relative flex-shrink-0 w-[160px] h-[90px] overflow-hidden rounded-lg bg-muted">
         <Image
           src={video.snippet.thumbnails.medium.url}
           alt={video.snippet.title}
@@ -24,13 +24,13 @@ export default function VideoCardSmall({ video }: VideoCardSmallProps) {
 
       {/* 텍스트 영역 */}
       <div className="flex flex-col gap-1 min-w-0">
-        <h3 className="line-clamp-2 text-[13px] font-bold leading-snug">
+        <h3 className="line-clamp-2 text-[13px] font-bold leading-snug text-foreground group-hover:text-red-600 transition-colors">
           {video.snippet.title}
         </h3>
-        <p className="text-[11px] text-muted-foreground truncate">
+        <p className="text-[11px] font-semibold text-foreground/80 truncate hover:text-foreground transition-colors">
           {video.snippet.channelTitle}
         </p>
-        <p className="text-[11px] text-muted-foreground">
+        <p className="text-[11px] font-medium text-muted-foreground/90">
           조회수 {Number(video.statistics.viewCount).toLocaleString()}회
         </p>
       </div>

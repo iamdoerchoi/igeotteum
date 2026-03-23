@@ -10,12 +10,23 @@
     "prepare": "husky"
   },
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "@next/third-parties": "^16.1.6",
+>>>>>>> 9d1263f8101512ddd88b96d4d6bfa0580865fd35
     "@tanstack/react-query": "^5.90.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.33.0",
+<<<<<<< HEAD
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
+=======
+    "html-entities": "^2.6.0",
+    "lucide-react": "^0.563.0",
+    "next": "16.1.6",
+    "next-themes": "^0.4.6",
+>>>>>>> 9d1263f8101512ddd88b96d4d6bfa0580865fd35
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
